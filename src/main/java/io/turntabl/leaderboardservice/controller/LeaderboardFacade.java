@@ -1,5 +1,6 @@
 package io.turntabl.leaderboardservice.controller;
 
+import io.turntabl.leaderboardservice.controller.response.LanguageLevelDto;
 import io.turntabl.leaderboardservice.controller.response.ProfileDto;
 import io.turntabl.leaderboardservice.converter.ProfileToProfileDtoConverter;
 import io.turntabl.leaderboardservice.service.LeaderboardRepositoryService;
@@ -39,6 +40,24 @@ public class LeaderboardFacade {
         profileList.addAll(getLeaderboard());
         Collections.sort(profileList, Comparator.comparingInt(ProfileDto::getOverallRank));
         Collections.reverse(profileList);
+        return profileList;
+    }
+
+    public List<ProfileDto> getProfilesByLanguage(String language){
+        List<ProfileDto> profileList = new ArrayList<>();
+
+        getLeaderboard().stream().forEach(profile ->{
+            if (profile.getLanguages() != null){
+                for (LanguageLevelDto d :
+                        profile.getLanguages()) {
+                    if (d.getName().equals(language)){
+                        profileList.add(profile);
+                    }
+                }
+            }
+
+        });
+
         return profileList;
     }
 }
