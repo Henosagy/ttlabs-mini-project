@@ -39,7 +39,9 @@ class LeaderboardControllerTest {
 
         mockMvc.perform(get("/v1/leaderboard"))
                 .andExpect(status().isOk())
-                .andExpect(result -> assertThat(result.getResponse().getContentAsString()).isEqualTo(objectMapper.writeValueAsString(expectedResponse)));
+                .andExpect(result -> assertThat(result.getResponse()
+                        .getContentAsString())
+                        .isEqualTo(objectMapper.writeValueAsString(expectedResponse)));
     }
 
     @Test
@@ -59,7 +61,9 @@ class LeaderboardControllerTest {
 
         mockMvc.perform(get("/v1/leaderboard/honor"))
                 .andExpect(status().isOk())
-                .andExpect(result -> assertThat(result.getResponse().getContentAsString()).isEqualTo(objectMapper.writeValueAsString(expectedResponse)));
+                .andExpect(result -> assertThat(result.getResponse()
+                        .getContentAsString())
+                        .isEqualTo(objectMapper.writeValueAsString(expectedResponse)));
     }
 
     @Test
@@ -79,6 +83,31 @@ class LeaderboardControllerTest {
 
         mockMvc.perform(get("/v1/leaderboard/overall-rank"))
                 .andExpect(status().isOk())
-                .andExpect(result -> assertThat(result.getResponse().getContentAsString()).isEqualTo(objectMapper.writeValueAsString(expectedResponse)));
+                .andExpect(result -> assertThat(result.getResponse()
+                        .getContentAsString())
+                        .isEqualTo(objectMapper.writeValueAsString(expectedResponse)));
+    }
+
+    @Test
+    void shouldGetLeaderboardByLanguage() throws Exception {
+        ProfileDto profile1 = ProfileDto.builder()
+                .username("lameiraatt")
+                .name("Ana Lameira")
+                .build();
+
+        ProfileDto profile2 = ProfileDto.builder()
+                .username("henosagy")
+                .name("Henry")
+                .build();
+
+        List<ProfileDto> expectedResponse = List.of(profile1);
+
+        when(leaderboardFacade.getProfilesByLanguage("java")).thenReturn(expectedResponse);
+
+        mockMvc.perform(get("/v1/leaderboard/java"))
+                .andExpect(status().isOk())
+                .andExpect(result -> assertThat(result.getResponse()
+                        .getContentAsString())
+                        .isEqualTo(objectMapper.writeValueAsString(expectedResponse)));
     }
 }

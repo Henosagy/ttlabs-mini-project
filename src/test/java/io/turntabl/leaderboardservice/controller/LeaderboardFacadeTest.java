@@ -56,7 +56,7 @@ class LeaderboardFacadeTest {
     }
 
     @Test
-    void getLeaderboardByHonor(){
+    void getLeaderboardByOrderedByHonor(){
         ProfileDto profile1 = ProfileDto.builder()
                 .username("lameiraatt")
                 .name("Ana Lameira")
@@ -77,7 +77,7 @@ class LeaderboardFacadeTest {
     }
 
     @Test
-    void getLeaderboardByOverallRank(){
+    void getLeaderboardByOrderedByOverallRank(){
         ProfileDto profile1 = ProfileDto.builder()
                 .username("lameiraatt")
                 .name("Ana Lameira")
@@ -95,5 +95,24 @@ class LeaderboardFacadeTest {
         when(underTest.getProfilesOrderedByHonor()).thenReturn(List.of(profile1, profile2));
 
         assertThat(underTest.getProfilesOrderedByHonor()).isEqualTo(expectedResult);
+    }
+
+    @Test
+    void getLeaderboardByLanguage(){
+        ProfileDto profile1 = ProfileDto.builder()
+                .username("lameiraatt")
+                .name("Ana Lameira")
+                .build();
+
+        ProfileDto profile2 = ProfileDto.builder()
+                .username("henosagy")
+                .name("Henry")
+                .build();
+
+        List<ProfileDto> expectedResult = List.of(profile1);
+
+        when(underTest.getProfilesByLanguage("java")).thenReturn(List.of(profile1));
+
+        assertThat(underTest.getProfilesByLanguage("java")).isEqualTo(expectedResult);
     }
 }
