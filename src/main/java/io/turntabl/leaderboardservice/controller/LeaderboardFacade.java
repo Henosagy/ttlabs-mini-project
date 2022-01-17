@@ -6,6 +6,9 @@ import io.turntabl.leaderboardservice.service.LeaderboardRepositoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -21,5 +24,21 @@ public class LeaderboardFacade {
         return leaderboardRepositoryService.getProfiles().stream()
                 .map(profileToProfileDtoConverter::convert)
                 .collect(toList());
+    }
+
+    public List<ProfileDto> getProfilesOrderedByHonor(){
+        List<ProfileDto> profileList = new ArrayList<>();
+        profileList.addAll(getLeaderboard());
+        Collections.sort(profileList, Comparator.comparingInt(ProfileDto::getHonour));
+        Collections.reverse(profileList);
+        return profileList;
+    }
+
+    public List<ProfileDto> getProfilesOrderedByOverallRank(){
+        List<ProfileDto> profileList = new ArrayList<>();
+        profileList.addAll(getLeaderboard());
+        Collections.sort(profileList, Comparator.comparingInt(ProfileDto::getOverallRank));
+        Collections.reverse(profileList);
+        return profileList;
     }
 }

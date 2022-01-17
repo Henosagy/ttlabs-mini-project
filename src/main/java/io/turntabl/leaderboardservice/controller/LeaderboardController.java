@@ -19,4 +19,14 @@ public class LeaderboardController {
     public List<ProfileDto> getLeaderboard() {
         return leaderboardFacade.getLeaderboard();
     }
+
+    @GetMapping("/honor")
+    public List<ProfileDto> getLeaderboardOrderedByHonor(){
+        return leaderboardFacade.getProfilesOrderedByHonor();
+    }
+
+    @GetMapping("/overall-rank")
+    public List<ProfileDto> getLeaderboardOrderedByOverallRank(){
+        return leaderboardFacade.getProfilesOrderedByOverallRank();
+    }
 }
