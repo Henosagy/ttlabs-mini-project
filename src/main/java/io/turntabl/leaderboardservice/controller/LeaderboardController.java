@@ -35,4 +35,10 @@ public class LeaderboardController {
     public List<ProfileDto> getLeaderboardByLanguage(@PathVariable("language") String language){
         return leaderboardFacade.getProfilesByLanguage(language);
     }
+
+    @GetMapping("/add/{username}")
+    public String addUser(@PathVariable("username") String username){
+        leaderboardFacade.insertIntoDatabase(username);
+        return "Inserted user";
+    }
 }
