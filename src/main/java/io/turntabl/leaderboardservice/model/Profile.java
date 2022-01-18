@@ -1,6 +1,7 @@
 package io.turntabl.leaderboardservice.model;
 
 import lombok.Data;
+import lombok.NonNull;
 import lombok.experimental.Accessors;
 
 import javax.persistence.CascadeType;

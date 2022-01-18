@@ -2,6 +2,7 @@ package io.turntabl.leaderboardservice.controller.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
+import lombok.NonNull;
 import lombok.Value;
 
 import java.util.List;

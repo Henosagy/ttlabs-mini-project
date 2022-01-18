@@ -4,6 +4,7 @@ import io.turntabl.leaderboardservice.controller.response.LanguageLevelDto;
 import io.turntabl.leaderboardservice.controller.response.ProfileDto;
 import io.turntabl.leaderboardservice.model.LanguageLevel;
 import io.turntabl.leaderboardservice.model.Profile;
+import lombok.NonNull;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
