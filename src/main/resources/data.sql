@@ -1,4 +1,2 @@
-
-INSERT INTO PROFILES (ID) VALUES ('konlan');
 INSERT INTO PROFILES (ID) VALUES ('randyayittah');
 INSERT INTO PROFILES (ID) VALUES ('henosagy');
