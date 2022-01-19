@@ -3,6 +3,7 @@ package io.turntabl.leaderboardservice.controller;
 import io.turntabl.leaderboardservice.controller.response.LanguageLevelDto;
 import io.turntabl.leaderboardservice.controller.response.ProfileDto;
 import io.turntabl.leaderboardservice.converter.ProfileToProfileDtoConverter;
+import io.turntabl.leaderboardservice.model.Profile;
 import io.turntabl.leaderboardservice.repository.ProfileRepository;
 import io.turntabl.leaderboardservice.service.LeaderboardRepositoryService;
 import lombok.RequiredArgsConstructor;
@@ -33,34 +34,26 @@ public class LeaderboardFacade {
     }
 
     public List<ProfileDto> getProfilesOrderedByHonor(){
-        List<ProfileDto> profileList = new ArrayList<>(getLeaderboard());
-        Collections.sort(profileList, Comparator.comparingInt(ProfileDto::getHonour));
-        Collections.reverse(profileList);
-        return profileList;
+        return leaderboardRepositoryService.getProfiles().stream()
+                .sorted(Comparator.comparingInt(Profile::getHonour).reversed())
+                .map(profileToProfileDtoConverter::convert)
+                .collect(toList());
     }
 
     public List<ProfileDto> getProfilesOrderedByOverallRank(){
-        List<ProfileDto> profileList = new ArrayList<>(getLeaderboard());
-        Collections.sort(profileList, Comparator.comparingInt(ProfileDto::getOverallRank));
-        Collections.reverse(profileList);
-        return profileList;
+        return leaderboardRepositoryService.getProfiles().stream()
+                .sorted(Comparator.comparingInt(Profile::getOverallRank).reversed())
+                .map(profileToProfileDtoConverter::convert)
+                .collect(toList());
     }
 
     public List<ProfileDto> getProfilesByLanguage(String language){
-        List<ProfileDto> profileList = new ArrayList<>();
-
-        getLeaderboard().forEach(profile ->{
-            if (profile.getLanguages() != null){
-                for (LanguageLevelDto d : profile.getLanguages()) {
-                    if (d.getName().equals(language)){
-                        profileList.add(profile);
-                    }
-                }
-            }
-
-        });
-
-        return profileList;
+        return leaderboardRepositoryService.getProfiles().stream()
+                .filter(profile -> profile.getLanguageLevels().stream()
+                        .anyMatch(languageLevel -> languageLevel.getName().equals(language)))
+                .sorted(Comparator.comparingInt(Profile::getHonour).reversed())
+                .map(profileToProfileDtoConverter::convert)
+                .collect(toList());
     }
 
     public void insertIntoDatabase(String username){

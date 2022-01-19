@@ -34,11 +34,6 @@ class LeaderboardFacadeTest {
     @Mock
     private LeaderboardFacade underTest;
 
-//    @BeforeEach
-//    void setUp(){
-//        underTest = new LeaderboardFacade(leaderboardRepositoryService, profileToProfileDtoConverter);
-//    }
-
     @Test
     void getLeaderboard() {
         ProfileDto profileDto = ProfileDto.builder()
