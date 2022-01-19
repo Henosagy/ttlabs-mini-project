@@ -1,7 +1,7 @@
 package io.turntabl.leaderboardservice.model;
 
-import lombok.Data;
-import lombok.NonNull;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.CascadeType;
@@ -32,10 +32,12 @@ public class Profile {
     @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<LanguageLevel> languageLevels;
 
+
     public Profile setLanguageLevels(List<LanguageLevel> languageLevels) {
         for (LanguageLevel languageLevel: languageLevels) {
             languageLevel.setProfile(this);
         }
+
         this.languageLevels = languageLevels;
         return this;
     }

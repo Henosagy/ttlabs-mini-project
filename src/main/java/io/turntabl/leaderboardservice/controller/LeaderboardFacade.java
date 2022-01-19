@@ -51,8 +51,7 @@ public class LeaderboardFacade {
 
         getLeaderboard().forEach(profile ->{
             if (profile.getLanguages() != null){
-                for (LanguageLevelDto d :
-                        profile.getLanguages()) {
+                for (LanguageLevelDto d : profile.getLanguages()) {
                     if (d.getName().equals(language)){
                         profileList.add(profile);
                     }

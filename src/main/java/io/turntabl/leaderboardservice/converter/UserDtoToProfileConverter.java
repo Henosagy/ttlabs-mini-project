@@ -1,9 +1,11 @@
 package io.turntabl.leaderboardservice.converter;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.turntabl.leaderboardservice.client.response.RankDto;
 import io.turntabl.leaderboardservice.client.response.UserDto;
 import io.turntabl.leaderboardservice.model.LanguageLevel;
 import io.turntabl.leaderboardservice.model.Profile;
+import lombok.ToString;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
@@ -17,8 +19,7 @@ import static java.util.stream.Collectors.toList;
 public class UserDtoToProfileConverter implements Converter<UserDto, Profile> {
 
     @Override
-    @NonNull
-    public Profile convert(UserDto source) {
+    public Profile convert( UserDto source) {
         return new Profile()
                 .setId(source.getUsername())
                 .setName(source.getName())
@@ -35,4 +36,6 @@ public class UserDtoToProfileConverter implements Converter<UserDto, Profile> {
                         .setRank(entry.getValue().getRank()))
                 .collect(toList());
     }
+
+
 }

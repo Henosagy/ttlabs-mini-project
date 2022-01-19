@@ -2,10 +2,7 @@ package io.turntabl.leaderboardservice.controller;
 
 import io.turntabl.leaderboardservice.controller.response.ProfileDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,7 +13,7 @@ public class LeaderboardController {
 
     private final LeaderboardFacade leaderboardFacade;
 
-    @GetMapping
+    @GetMapping("/all")
     public List<ProfileDto> getLeaderboard() {
         return leaderboardFacade.getLeaderboard();
     }
@@ -31,12 +28,12 @@ public class LeaderboardController {
         return leaderboardFacade.getProfilesOrderedByOverallRank();
     }
 
-    @GetMapping("/{language}")
+    @GetMapping("/language/{language}")
     public List<ProfileDto> getLeaderboardByLanguage(@PathVariable("language") String language){
         return leaderboardFacade.getProfilesByLanguage(language);
     }
 
-    @GetMapping("/add/{username}")
+    @PostMapping("/add/{username}")
     public String addUser(@PathVariable("username") String username){
         leaderboardFacade.insertIntoDatabase(username);
         return "Inserted user";
